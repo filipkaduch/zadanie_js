@@ -2,7 +2,7 @@
   <tr class="border border-black bg-slate-600">
     <td
       v-for="(value, index1) in header"
-      :key="index1"
+      :key="`data_row-${index1}`"
       :colspan="header.length"
       class="border border-black py-1 px-2">
       <div v-if="index1 === 0" class="flex justify-between items-center">
@@ -16,8 +16,15 @@
       </div>
     </td>
   </tr>
-  <tr v-for="(data, index2) in loadedData" :key="index2" class="border border-black bg-slate-400">
-    <td v-for="(info, index3) in data" :colspan="header.length" :key="index3" class="border border-black">
+  <tr
+    v-for="(data, index2) in loadedData"
+    :key="`expanded_row-${index2}`"
+    class="border border-black bg-slate-400">
+    <td
+      v-for="(info, index3) in data"
+      :colspan="header.length"
+      :key="`expanded_row_cell-${index3}`"
+      class="border border-black">
       {{ info }}
     </td>
   </tr>
@@ -53,5 +60,6 @@ watch(
     deep: true
   }
 );
+
 </script>
 

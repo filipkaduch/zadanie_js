@@ -62,7 +62,11 @@ const setOrder = (category, reset = false) => {
   if (reset) {
     sortDirection.value = '';
   } else {
-    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    if (sortKey.value === category) {
+      sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortDirection.value = 'asc';
+    }
   }
 
   sortKey.value = category;

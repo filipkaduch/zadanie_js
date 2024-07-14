@@ -1,14 +1,19 @@
 <template>
   <div id="app" class="h-100">
-    <PivotTable :data="tableData" />
+    <PivotTable :formatted-data="tableData" :headers="headersData" :raw-data="rawData" />
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 import PivotTable from './components/pivotTable/PivotTable.vue';
+import { dataTransformation } from './utils/dataUtils';
 
-const tableData = ref();
+const tableData = ref([]);
+
+const rawData = ref([]);
+
+const headersData = ref([]);
 
 const fetchData = async () => {
   try {
@@ -16,7 +21,13 @@ const fetchData = async () => {
 
     const result = await response.json();
 
-    tableData.value = result;
+    rawData.value = result;
+
+    const { data, header } = dataTransformation(result);
+
+    tableData.value = data;
+
+    headersData.value = header;
   } catch (error) {
     console.error('Error fetching data:', error);
   }

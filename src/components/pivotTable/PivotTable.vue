@@ -1,19 +1,19 @@
 <template>
-	<div class="w-full table-overflow px-3">
+  <div class="w-full table-overflow px-3">
     <div class="text-xl font-bold" >Pivot Table</div>
-		<table v-if="formattedData.length" class="w-full border border-black my-5 text-white">
-			<thead v-if="headers.length" class="bg-slate-900">
-        <PivotTableHeaders :headers="headers" @sort="setOrder" />
-			</thead>
-			<tbody v-if="content.length">
-        <PivotTableRow
-          v-for="(row, index) in content"
-          :key="`pivot_table_row-${index}`"
-          :header="headers"
-          :row="row" />
-			</tbody>
-		</table>
-	</div>
+      <table v-if="formattedData.length" class="w-full border border-black my-5 text-white">
+        <thead v-if="headers.length" class="bg-slate-900">
+          <PivotTableHeaders :headers="headers" @sort="setOrder" />
+        </thead>
+        <tbody v-if="content.length">
+          <PivotTableRow
+            v-for="(row, index) in content"
+            :key="`pivot_table_row-${index}`"
+            :header="headers"
+            :row="row" />
+        </tbody>
+      </table>
+  </div>
 </template>
 
 <script setup>

@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from "vue";
+import { defineEmits, defineProps, ref, watch } from "vue";
 
 const props = defineProps({
   header: {
@@ -42,17 +42,29 @@ const props = defineProps({
     type: Object,
     default: () => {}
   },
+  state: {
+    type: Boolean,
+    default: false
+  }
 });
+
+const emit = defineEmits(['opened']);
 
 const loadedData = ref([]);
 
-const triggerData = (data) => loadedData.value = loadedData.value.length ? [] : data;
+const triggerData = (data) => {
+  loadedData.value = loadedData.value.length ? [] : data;
+
+  emit('opened', !!loadedData.value.length);
+};
 
 watch(
-  () => props.row.subcategories,
+  () => props.row,
   (value) => {
-    if (loadedData.value.length) {
-      loadedData.value = value;
+    if (props.state) {
+      loadedData.value = value.subcategories;
+    } else {
+      loadedData.value = [];
     }
   },
   {

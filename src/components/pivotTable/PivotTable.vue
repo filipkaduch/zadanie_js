@@ -10,7 +10,9 @@
             v-for="(row, index) in content"
             :key="`pivot_table_row-${index}`"
             :header="headers"
-            :row="row" />
+            :row="row"
+            :state="rowMap[index]"
+            @opened="rowMap[index] = $event"/>
         </tbody>
       </table>
   </div>
@@ -37,6 +39,8 @@ const props = defineProps({
   }
 });
 
+const rowMap = ref([]);
+
 const content = ref([]);
 
 const setOrder = (category, sortDirection) => {
@@ -46,8 +50,10 @@ const setOrder = (category, sortDirection) => {
 watch(
   () => props.formattedData,
   (value) => {
-    if (value?.length) {
+    if (value.length) {
       content.value = value;
+
+      value.map(() => rowMap.value.push(false));
     }
   },
   {
